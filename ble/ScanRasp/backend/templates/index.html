@@ -1,0 +1,38 @@
+<!doctype html>
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous">
+</script>
+
+<h1>IBeacons detector</h1>
+<div id="nodes">
+  <h2>Node A: <span id="node-a"></span></h2>
+  <h2>Node B: <span id="node-b"></span></h2>
+  <h2>Node C: <span id="node-c"></span></h2>
+</div>
+
+
+
+<script>
+
+  var polling = setInterval(function(){
+    var request = $.ajax({
+      url: "api/get-nodes",
+      method: "GET",
+      dataType: "json"
+    });
+    request.done(function( msg ) {
+      console.log(msg);
+      $('#node-a').html(msg['Node A']);
+      $('#node-b').html(msg['Node B']);
+      $('#node-c').html(msg['Node C']);
+    });
+    
+    request.fail(function( jqXHR, textStatus ) {
+      console.log( "Request failed: " + textStatus );
+    });
+  },1000)
+
+  
+</script>
